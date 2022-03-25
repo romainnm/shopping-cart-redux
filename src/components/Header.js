@@ -13,7 +13,7 @@ const Header = ({ cartAmount, closeCheckout, openCheckout }) => {
   return (
     <div className="container-center header-container">
       <h1 className="logo">
-        <Link to="/">
+        <Link to="/shopping-cart-redux">
           Happy Pie <GiPieSlice className="logo-icon" />
         </Link>
       </h1>
@@ -21,12 +21,20 @@ const Header = ({ cartAmount, closeCheckout, openCheckout }) => {
         <nav>
           <ul>
             <li>
-              <Link to="/" className="nav-link" onClick={closeCheckout}>
+              <Link
+                to="/shopping-cart-redux"
+                className="nav-link"
+                onClick={closeCheckout}
+              >
                 home
               </Link>
             </li>
             <li>
-              <Link to="/Shop" className="nav-link" onClick={closeCheckout}>
+              <Link
+                to="/shopping-cart-redux/shop"
+                className="nav-link"
+                onClick={closeCheckout}
+              >
                 Shop
               </Link>
             </li>

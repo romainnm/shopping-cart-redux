@@ -13,7 +13,7 @@ import { useEffect } from "react";
 
 function App({ cart, dispatch }) {
   useEffect(() => {
-    dispatch({ type: LOAD_DATA, payload: data })
+    dispatch({ type: LOAD_DATA, payload: data });
     dispatch({ type: GET_CART_TOTALS });
   }, [cart]);
 
@@ -21,10 +21,10 @@ function App({ cart, dispatch }) {
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/shopping-cart-redux">
           <Home />
         </Route>
-        <Route exact path="/shop">
+        <Route exact path="/shopping-cart-redux/shop">
           <Shop />
         </Route>
       </Switch>
