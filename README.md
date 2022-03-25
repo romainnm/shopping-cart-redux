@@ -1,4 +1,4 @@
-# SHOPPING CART
+# SHOPPING CART (redux)
 
 ### Project built with:
 
