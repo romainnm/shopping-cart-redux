@@ -1,20 +1,21 @@
-import { useGlobalContext } from "../context";
+// Connect to the Redux store
+import { connect } from "react-redux";
 /* Icons */
 import { IoClose } from "react-icons/io5";
 import { BiTrash } from "react-icons/bi";
 import { FaPlus, FaMinus } from "react-icons/fa";
+// Actions
+import { CLOSE_CHECKOUT, REMOVE_CART, UPDATE_CART_AMOUNT } from "../actions";
 
-const CheckoutSidebar = () => {
-  const {
-    cart,
-    closeCheckout,
-    removeFromCart,
-    cartAmount,
-    cartTotal,
-    checkout,
-    toggleAmountCart,
-  } = useGlobalContext();
-  
+const CheckoutSidebar = ({
+  cart = [],
+  checkout,
+  closeCheckout,
+  removeFromCart,
+  cartTotal,
+  cartAmount,
+  updateCartAmount,
+}) => {
   // If empty cart
   if (cart.length === 0) {
     return (
@@ -34,7 +35,7 @@ const CheckoutSidebar = () => {
     );
   }
 
-  // If cart had items
+  // If cart has items
   return (
     <div
       className={`${
@@ -50,7 +51,6 @@ const CheckoutSidebar = () => {
 
       {/* List of cart item */}
       <div className="checkout-product-list">
-
         {/* Display cart item */}
         {cart.map((cartItems) => {
           const { id, name, price, amount, img } = cartItems;
@@ -61,7 +61,7 @@ const CheckoutSidebar = () => {
                 <div className="product-quantity">
                   <button
                     type="submit"
-                    onClick={() => toggleAmountCart(id, "increase")}
+                    onClick={() => updateCartAmount(id, "increase")}
                   >
                     <FaPlus />
                   </button>
@@ -71,7 +71,7 @@ const CheckoutSidebar = () => {
                   </p>
                   <button
                     type="submit"
-                    onClick={() => toggleAmountCart(id, "decrease")}
+                    onClick={() => updateCartAmount(id, "decrease")}
                   >
                     <FaMinus />
                   </button>
@@ -100,4 +100,24 @@ const CheckoutSidebar = () => {
   );
 };
 
-export default CheckoutSidebar;
+// map the states and make them accessible as prop in the component
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+    cartAmount: state.cartAmount,
+    cartTotal: state.cartTotal,
+    checkout: state.checkout,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeCheckout: () => dispatch({ type: CLOSE_CHECKOUT }),
+    removeFromCart: (id) => dispatch({ type: REMOVE_CART, payload: id }),
+    updateCartAmount: (id, value) =>
+      dispatch({ type: UPDATE_CART_AMOUNT, payload: { id, value } }),
+  };
+};
+
+// Connect wraps the component and make accessible the store to the component
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutSidebar);

@@ -1,10 +1,12 @@
-import { useGlobalContext } from "../context";
-//Icons
+// Redux
+import { connect } from "react-redux";
+// Icons
 import { FaPlus, FaMinus } from "react-icons/fa";
+// Actions
+import { TOGGLE_AMOUNT, ADD_TO_CART } from "../actions";
 
-const Product = ({ product }) => {
+const Product = ({ product, toggleAmount, addToCart }) => {
   const { id, name, price, amount, img } = product;
-  const { toggleAmount, addToCart } = useGlobalContext();
 
   return (
     <article className="product-card">
@@ -47,4 +49,13 @@ const Product = ({ product }) => {
   );
 };
 
-export default Product;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleAmount: (id, value) =>
+      dispatch({ type: TOGGLE_AMOUNT, payload: { id, value } }),
+    addToCart: (product, value) =>
+      dispatch({ type: ADD_TO_CART, payload: { product, value } }),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Product);

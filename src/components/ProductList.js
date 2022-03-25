@@ -1,9 +1,9 @@
-import { useGlobalContext } from "../context";
+import { connect } from "react-redux";
 import Product from "./Product";
 import CheckoutSidebar from "./CheckoutSidebar";
 
-const ProductList = () => {
-  const { products } = useGlobalContext();
+const ProductList = ({ products }) => {
+
   return (
     <section className="shop-container">
       <h2>Our delicious pies!</h2>
@@ -18,4 +18,10 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+const mapStateToProps = (state) => {
+  return {
+    products: state.products,
+  };
+};
+
+export default connect(mapStateToProps)(ProductList);
